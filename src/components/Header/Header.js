@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-//Import individual components here
-import Header from '../Header/Header';
+//Import Styles
+import './Header.css';
 
-class App extends Component {
+class Header extends Component {
   // Renders the entire app on the DOM
   render() {
     return (
       <div>
-        <Header />
+        <h1>My Movie Database</h1>
       </div>
     );
   }
 }
 
-export default App;
+export default Header;
