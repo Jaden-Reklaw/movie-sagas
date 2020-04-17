@@ -7,7 +7,6 @@ import './MovieCollection.css';
 import MovieList from '../MovieList/MovieList';
 
 class MovieCollection extends Component {
-  // Renders the entire app on the DOM
   render() {
     return (
       <div>

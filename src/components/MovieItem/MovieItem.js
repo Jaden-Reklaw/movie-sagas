@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import './MovieItem.css';
 
 class MovieItem extends Component {
-  // Renders the entire app on the DOM
   render() {
     const movie = this.props.movie;
     return (
