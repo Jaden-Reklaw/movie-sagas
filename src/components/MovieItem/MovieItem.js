@@ -8,7 +8,7 @@ class MovieItem extends Component {
   render() {
     return (
       <div>
-        <h1>My Movie Database</h1>
+        {JSON.stringify(this.props.movie)}
       </div>
     );
   }

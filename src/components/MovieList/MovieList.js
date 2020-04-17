@@ -6,8 +6,11 @@ import './MovieList.css';
 //Connect to the redux store
 import { connect } from 'react-redux';
 
+//Import components
+import MovieItem from '../MovieItem/MovieItem';
+
 const mapStateToProps = reduxState => ({
-     reduxState
+     movies: reduxState.movies
 });
 
 class MovieList extends Component {
@@ -20,6 +23,7 @@ class MovieList extends Component {
     return (
       <div>
         <h2>MovieList</h2>
+        {this.props.movies.map((movie, i) => <MovieItem key={i} movie={movie}/>)}
       </div>
     );
   }
