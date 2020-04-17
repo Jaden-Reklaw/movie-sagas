@@ -1,0 +1,10 @@
+.movie-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.image-pic {
+    justify-self: center;
+}
