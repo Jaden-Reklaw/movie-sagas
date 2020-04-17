@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import './MovieCollection.css';
 
 //Import components to use on MovieCollection
-
+import MovieList from '../MovieList/MovieList';
 
 class MovieCollection extends Component {
   // Renders the entire app on the DOM
@@ -12,7 +12,7 @@ class MovieCollection extends Component {
     return (
       <div>
         <h2>Check out Some of my movies!</h2>
-        
+        <MovieList />
       </div>
     );
   }

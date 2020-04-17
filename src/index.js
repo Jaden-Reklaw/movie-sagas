@@ -3,16 +3,26 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App.js';
 import registerServiceWorker from './registerServiceWorker';
+
+//Used to create redux state and a store
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-// Provider allows us to use redux within our react app
+
+//Provider allows us to use redux within our react app
 import { Provider } from 'react-redux';
+
+//Used to for logging state in redux when it changes
 import logger from 'redux-logger';
-// Import saga middleware
+
+//Import saga middleware
 import createSagaMiddleware from 'redux-saga';
+import {takeEvery, put} from 'redux-saga/effects';
+
+//Bring in Axios into the project
+import axios from 'axios';
 
 // Create the rootSaga generator function
 function* rootSaga() {
-
+    yield takeEvery('FETCH_MOVIES', fetchMovieSaga);
 }
 
 // Create sagaMiddleware
@@ -35,6 +45,21 @@ const genres = (state = [], action) => {
             return action.payload;
         default:
             return state;
+    }
+}
+
+//Create Generator Funcitons for sagas
+//Generator function that uses saga to ajax get request
+function* fetchMovieSaga ( action ){
+    console.log('In fetchMovieSaga', action);
+    try {
+        //Making asyn AJAX (axios) request
+        const response = yield axios.get('/api/movies');
+        //Once that is back successfully, dispatch action to the reducer
+        console.log('response is',response.data);
+        yield put({ type: 'SET_MOVIES', payload: response.data});
+    } catch(error) {
+        console.log('error with movie get request', error);
     }
 }
 
