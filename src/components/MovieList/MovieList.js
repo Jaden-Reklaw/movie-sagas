@@ -22,7 +22,6 @@ class MovieList extends Component {
   render() {
     return (
       <div>
-        <h2>MovieList</h2>
         {this.props.movies.map((movie, i) => <MovieItem key={i} movie={movie}/>)}
       </div>
     );
