@@ -33,6 +33,10 @@ class Details extends Component {
     this.props.history.push(`/`);
   }
 
+  editButton = () => {
+    this.props.history.push(`/edit/${this.props.location.pathname.replace('/details/id-number=', '')}`);
+  }
+
   render() {
     const movie = this.props.reduxState.movie;
     return (
@@ -48,6 +52,7 @@ class Details extends Component {
         <h3>Genre:</h3>
         <p>{movie.description}</p>
         <button onClick={this.backButton}>Back</button>
+        <button onClick={this.editButton}>Edit</button>
       </div>
     );
   }
