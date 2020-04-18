@@ -20,15 +20,16 @@ import {takeEvery, put} from 'redux-saga/effects';
 //Bring in Axios into the project
 import axios from 'axios';
 
-// Create the rootSaga generator function
+//Create the rootSaga generator function
 function* rootSaga() {
-    yield takeEvery('FETCH_MOVIES', fetchMovieSaga);
+    yield takeEvery('FETCH_MOVIES', fetchMoviesSaga);
+    yield takeEvery('FETCH_MOVIE', getMovieSaga);
 }
 
-// Create sagaMiddleware
+//Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
-// Used to store movies returned from the server
+//Used to store movies returned from the server
 const movies = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
@@ -38,7 +39,17 @@ const movies = (state = [], action) => {
     }
 }
 
-// Used to store the movie genres
+//Used to store movies returned from the server
+const movie = (state = {}, action) => {
+    switch (action.type) {
+        case 'SET_MOVIE':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+//Used to store the movie genres
 const genres = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES':
@@ -50,14 +61,28 @@ const genres = (state = [], action) => {
 
 //Create Generator Funcitons for sagas
 //Generator function that uses saga to ajax get request
-function* fetchMovieSaga ( action ){
-    console.log('In fetchMovieSaga', action);
+function* fetchMoviesSaga ( action ){
+    console.log('In fetchMoviesSaga', action);
     try {
         //Making asyn AJAX (axios) request
         const response = yield axios.get('/api/movies');
         //Once that is back successfully, dispatch action to the reducer
-        console.log('response is',response.data);
+        console.log('response for all movies is',response.data);
         yield put({ type: 'SET_MOVIES', payload: response.data});
+    } catch(error) {
+        console.log('error with movie get request', error);
+    }
+}
+
+//Generator function that uses saga to ajax get request
+function* getMovieSaga ( action ){
+    console.log('In getMovieSaga', action);
+    try {
+        //Making asyn AJAX (axios) request
+        const response = yield axios.get(`/api/movies/details?q=${action.payload}`);
+        //Once that is back successfully, dispatch action to the reducer
+        console.log('response for one movie is',response.data);
+        yield put({ type: 'SET_MOVIE', payload: response.data});
     } catch(error) {
         console.log('error with movie get request', error);
     }
@@ -67,6 +92,7 @@ function* fetchMovieSaga ( action ){
 const storeInstance = createStore(
     combineReducers({
         movies,
+        movie,
         genres,
     }),
     // Add sagaMiddleware to our store

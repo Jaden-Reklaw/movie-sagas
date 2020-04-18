@@ -8,10 +8,10 @@ import {withRouter} from 'react-router-dom';
 
 class MovieItem extends Component {
 
-  goToDetailsPage = (event, movie_id) => {
-    console.log('movie id is:', movie_id);
+  goToDetailsPage = (event, idnumber) => {
+    console.log('movie id is:', idnumber);
     //Change page from / to /understand
-    this.props.history.push(`/detials?movie_id=${movie_id}`);
+    this.props.history.push(`/details/id-number=${idnumber}`);
   }
 
   render() {

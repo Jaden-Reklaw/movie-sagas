@@ -15,8 +15,8 @@ const mapStateToProps = reduxState => ({
 
 class MovieList extends Component {
     componentDidMount() {
-        // use component did mount to dispatch an action to request the plantList from the API
-        this.props.dispatch({type: 'FETCH_MOVIES'});
+      // use component did mount to dispatch an action to request the plantList from the API
+      this.props.dispatch({type: 'FETCH_MOVIES'});
     }
 
   render() {
