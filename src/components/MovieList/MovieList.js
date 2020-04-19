@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 //Import components
 import MovieItem from '../MovieItem/MovieItem';
 
+//Get redux store
 const mapStateToProps = reduxState => ({
      movies: reduxState.movies
 });

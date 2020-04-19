@@ -25,6 +25,7 @@ function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchMoviesSaga);
     yield takeEvery('FETCH_MOVIE', getMovieSaga);
     yield takeEvery('FETCH_GENRES', getGenresSaga);
+    yield takeEvery('PUT_DESCRIPTION', updateDescriptionSaga);
 }
 
 //Create sagaMiddleware
@@ -100,6 +101,18 @@ function* getGenresSaga ( action ){
         yield put({ type: 'SET_GENRES', payload: response.data});
     } catch(error) {
         console.log('error with movie get request', error);
+    }
+}
+
+function* updateDescriptionSaga ( action, id ) {
+    try {
+        //Making asyn AJAX (axios) request
+        console.log('in updateDescriptionSaga payload is',action.payload);
+        const response = yield axios.put(`/api/movies/${action.payload.id}`, {description: action.payload.description});
+        //Once that is back successfully, dispatch action to the reducer
+        console.log('response for genres is',response.data);
+    } catch(error) {
+        console.log('error with set description request', error);
     }
 }
 

@@ -57,4 +57,21 @@ router.get('/edit', (req, res) => {
         });
 });
 
+// PUT /api/movies/<id>
+router.put('/:id',  (req, res) => {
+    let movie_update = req.body.description; 
+    let id = req.params.id; 
+  
+    console.log(`Updating description ${id} with `, movie_update);
+  
+    let sqlText = `UPDATE movies SET description = $1 
+                   WHERE id = $2;`;
+    pool.query(sqlText, [movie_update, id]).then((result) => {
+      res.sendStatus(201);
+    }).catch((error) => {
+      console.log('Error updating movie description with PUT', error);
+      res.sendStatus(500);
+    });
+  });
+
 module.exports = router;
