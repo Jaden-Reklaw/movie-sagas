@@ -15,18 +15,56 @@ const mapStateToProps = reduxState => ({
 
 class Edit extends Component {
   state = {
-    value: this.props.movie.description,
+    newValues: {
+      title: this.props.movie.title,
+      description: this.props.movie.description,
+    }
+  }
+
+  componentDidMount() {
+    this.getMovieId();
+    this.getGenres();
+  }
+
+  //Method for getting a movie
+  getMovieId = () => {
+    //Looking for query string to get id of movie
+    console.log(this.props.location.pathname);
+    let querystring = this.props.location.pathname;
+
+    //Removing extra part of the path
+    let movie_id = querystring.replace('/edit/', '');
+    console.log('editing movie id is:', movie_id);
+
+    //Notice the lack of the S on FETCH_MOVIE
+    this.props.dispatch({type: 'FETCH_MOVIE', payload: movie_id});
+  }
+
+  //Method for fetching the movie's genres
+  getGenres = () => {
+    //Looking for query string to get id of movie
+    console.log(this.props.location.pathname);
+    let querystring = this.props.location.pathname;
+
+    //Removing extra part of the path
+    let movie_id = querystring.replace('/edit/', '');
+    console.log('editing movie id is:', movie_id);
+
+    //Notice the lack of the S on FETCH_MOVIE
+    this.props.dispatch({type: 'FETCH_GENRES', payload: movie_id});
   }
 
   //Handles the change of state inside the textarea field
-  handleChangeFor = (event) => {
-    this.setState({value: event.target.value});
+  handleChangeFor = (event, propertyName) => {
+    this.setState({
+      newValues: {...this.state.newValues,[propertyName]: event.target.value,}
+    });
   }
 
   //Handles the event when the user clicks on the save button.
   handleSubmit = () => {
-    //Dispatch the update description
-    this.props.dispatch({type: 'PUT_DESCRIPTION', payload: {description: this.state.value, id: this.props.movie.id}});
+    //Dispatch the update movie title and description
+    this.props.dispatch({type: 'PUT_MOVIE', payload: {newDesTitle: this.state.newValues, id: this.props.movie.id}});
     //Get the movies again from the server that way when you switch you see update instantly
     this.props.dispatch({type: 'FETCH_MOVIES'});
     //Navigate back to the details page
@@ -39,12 +77,13 @@ class Edit extends Component {
     return (
       <div>
         <h1>Edit page</h1>
-        <pre>{JSON.stringify(movie)}</pre>
-        <img src={movie.poster} alt={movie.description}/>
-        <h2>{movie.title}</h2>
+        <img src={movie.poster} alt={movie.description}/><br />
+        <label>Edit Title:</label>
+        <input value={this.state.newValues.title} onChange={(event) => this.handleChangeFor(event, 'title')}/>
         <h3>Genre: {genres.map((genre, i) => <span key={i}>{genre.name} </span>)}</h3>
-        <textarea value={this.state.value} onChange={(event) => this.handleChangeFor(event)}></textarea>
-        <button onClick={this.handleSubmit}>Save</button>
+        <label>Edit Description:</label>
+        <textarea value={this.state.newValues.description} onChange={(event) => this.handleChangeFor(event, 'description')}></textarea>
+        <br /><button onClick={this.handleSubmit}>Save</button>
         <button>Cancel</button>
       </div>
     );

@@ -59,14 +59,16 @@ router.get('/edit', (req, res) => {
 
 // PUT /api/movies/<id>
 router.put('/:id',  (req, res) => {
-    let movie_update = req.body.description; 
+    console.log('req.body is',req.body.newDesTitle.title);
+    let movie_update_title = req.body.newDesTitle.title; 
+    let movie_update_description = req.body.newDesTitle.description;
     let id = req.params.id; 
   
-    console.log(`Updating description ${id} with `, movie_update);
+    console.log(`Updating movie with ${id} with `, movie_update_title, movie_update_description);
   
-    let sqlText = `UPDATE movies SET description = $1 
-                   WHERE id = $2;`;
-    pool.query(sqlText, [movie_update, id]).then((result) => {
+    let sqlText = `UPDATE movies SET title = $1, description = $2 
+                   WHERE id = $3;`;
+    pool.query(sqlText, [movie_update_title, movie_update_description, id]).then((result) => {
       res.sendStatus(201);
     }).catch((error) => {
       console.log('Error updating movie description with PUT', error);
