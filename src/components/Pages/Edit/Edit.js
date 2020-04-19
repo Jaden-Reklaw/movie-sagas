@@ -71,6 +71,12 @@ class Edit extends Component {
     this.props.history.push(`/details/id-number=${this.props.movie.id}`);
   }
 
+  //Handle the event when the user clicks on the cancel button.
+  handleCancel = () => {
+    //Navigate back to the details page
+    this.props.history.push(`/details/id-number=${this.props.movie.id}`);
+  }
+
   render() {
       const movie = this.props.movie;
       const genres = this.props.genres;
@@ -84,7 +90,7 @@ class Edit extends Component {
         <label>Edit Description:</label>
         <textarea value={this.state.newValues.description} onChange={(event) => this.handleChangeFor(event, 'description')}></textarea>
         <br /><button onClick={this.handleSubmit}>Save</button>
-        <button>Cancel</button>
+        <button onClick={this.handleCancel}>Cancel</button>
       </div>
     );
   }
