@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 //Import Styles
 import './Edit.css';
 
@@ -24,6 +23,16 @@ class Edit extends Component {
   componentDidMount() {
     this.getMovieId();
     this.getGenres();
+  }
+
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    if (this.props.movie.title !== prevProps.movie.title || this.props.movie.description !== prevProps.movie.description) {
+      this.setState({newValues: {
+        title: this.props.movie.title,
+        description: this.props.movie.description,
+      }});
+    }
   }
 
   //Method for getting a movie
@@ -82,7 +91,7 @@ class Edit extends Component {
       const genres = this.props.genres;
     return (
       <div>
-        <h1>Edit page</h1>
+        <h2>Editing Movie: {movie.title}</h2>
         <img src={movie.poster} alt={movie.description}/><br />
         <label>Edit Title:</label>
         <input value={this.state.newValues.title} onChange={(event) => this.handleChangeFor(event, 'title')}/>
