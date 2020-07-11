@@ -20,7 +20,7 @@ class Details extends Component {
   //Method for getting a movie
   getMovieId = () => {
     //Looking for query string to get id of movie
-    console.log(this.props.location.pathname);
+    console.log(this.props);
     let querystring = this.props.location.pathname;
 
     //Removing extra part of the path
